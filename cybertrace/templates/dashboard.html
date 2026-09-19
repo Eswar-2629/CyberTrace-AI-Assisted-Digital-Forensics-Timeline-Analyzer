@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CyberTrace Dashboard</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.3/styles/vis-timeline-graph2d.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vis-data@7.1.9/peer/umd/vis-data.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.3/peer/umd/vis-timeline-graph2d.min.js"></script>
+
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+    <h1>CyberTrace</h1>
+    <div>
+        <span id="currentUser"></span>
+        <button id="logoutButton">Logout</button>
+    </div>
+</header>
+
+<main class="layout">
+    <section class="panel">
+        <h2>Case selection</h2>
+
+        <select id="caseSelect"></select>
+        <button id="refreshButton">Refresh</button>
+        <button id="exportButton">Export CSV</button>
+
+        <label class="checkbox">
+            <input type="checkbox" id="anomaliesOnly">
+            Show anomalies only
+        </label>
+    </section>
+
+    <section class="cards">
+        <div class="metric">
+            <span>Events</span>
+            <strong id="eventCount">0</strong>
+        </div>
+
+        <div class="metric">
+            <span>Anomalies</span>
+            <strong id="anomalyCount">0</strong>
+        </div>
+
+        <div class="metric">
+            <span>Classifications</span>
+            <strong id="classificationCount">0</strong>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Chronological evidence timeline</h2>
+        <div id="timeline"></div>
+    </section>
+
+    <section class="panel chart-grid">
+        <div>
+            <h2>Event classifications</h2>
+            <canvas id="classificationChart"></canvas>
+        </div>
+
+        <div>
+            <h2>Anomaly highlights</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Message</th>
+                </tr>
+                </thead>
+                <tbody id="anomalyTable"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

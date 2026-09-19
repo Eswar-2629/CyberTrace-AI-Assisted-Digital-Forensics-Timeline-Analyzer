@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CyberTrace Login</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<main class="auth-card">
+    <h1>CyberTrace</h1>
+    <p>Digital Forensics Timeline Analyzer</p>
+
+    <form id="loginForm">
+        <label>Username</label>
+        <input id="username" required autocomplete="username">
+
+        <label>Password</label>
+        <input id="password" type="password" required autocomplete="current-password">
+
+        <button type="submit">Sign in</button>
+    </form>
+
+    <p id="error" class="error"></p>
+</main>
+
+<script>
+document.querySelector("#loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: document.querySelector("#username").value,
+            password: document.querySelector("#password").value
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        document.querySelector("#error").textContent =
+            data.error || "Login failed";
+        return;
+    }
+
+    localStorage.setItem("cybertrace_token", data.access_token);
+    localStorage.setItem("cybertrace_user", JSON.stringify(data.user));
+    window.location.href = "/dashboard";
+});
+</script>
+</body>
+</html>
